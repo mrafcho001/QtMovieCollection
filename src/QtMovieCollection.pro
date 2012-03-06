@@ -11,9 +11,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-		mainwindow.cpp
+		mainwindow.cpp \
+    movieinfo.cpp \
+    collectionmanager.cpp \
+    movielistmodel.cpp \
+    filterproxymodel.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    movieinfo.h \
+    collectionmanager.h \
+    movielistmodel.h \
+    filterproxymodel.h
 
 FORMS    += mainwindow.ui
 
@@ -29,7 +37,8 @@ CONFIG(debug, debug|release){
 	CONFIG += debug
 	QMAKE_CXXFLAGS_RELEASE += -g
 	QMAKE_CFLAGS_RELEASE += -g
-} else {
+}
+else {
 	DESTDIR = ../build/release
 
 	CONFIG += release
