@@ -15,15 +15,18 @@ SOURCES += main.cpp\
     movieinfo.cpp \
     collectionmanager.cpp \
     movielistmodel.cpp \
-    filterproxymodel.cpp
+    moviefilterproxymodel.cpp \
+    filtersearchwidget.cpp
 
 HEADERS  += mainwindow.h \
     movieinfo.h \
     collectionmanager.h \
     movielistmodel.h \
-    filterproxymodel.h
+    moviefilterproxymodel.h \
+    filtersearchwidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    filtersearchwidget.ui
 
 OBJECTS_DIR = ../build/.obj
 MOC_DIR = ../build/.moc

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "filtersearchwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,10 +17,12 @@ public:
 	~MainWindow();
 
 public slots:
-	void switchModels();
+	void toggleFilterBar();
+	void updateFilter(QString text, QRegExp::PatternSyntax ps, Qt::CaseSensitivity cs);
 	
 private:
 	Ui::MainWindow *ui;
+	FilterSearchWidget *filterBar;
 };
 
 #endif // MAINWINDOW_H

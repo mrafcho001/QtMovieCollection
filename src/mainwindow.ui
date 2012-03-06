@@ -100,6 +100,7 @@
     <addaction name="actionNewMovieGroup"/>
     <addaction name="actionDeleteMovieGroup"/>
     <addaction name="actionClearMovieGroup"/>
+    <addaction name="actionShowFIlter"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuMovie_Group"/>
@@ -115,6 +116,7 @@
    <addaction name="actionNewMovieGroup"/>
    <addaction name="actionDeleteMovieGroup"/>
    <addaction name="separator"/>
+   <addaction name="actionShowFIlter"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionClose">
@@ -155,6 +157,20 @@
    </property>
    <property name="toolTip">
     <string>Clear the items inside the selected movie group.</string>
+   </property>
+  </action>
+  <action name="actionShowFIlter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show FIlter</string>
+   </property>
+   <property name="toolTip">
+    <string>Begin filtering the results using regular expressions</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
  </widget>
