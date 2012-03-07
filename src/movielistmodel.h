@@ -2,13 +2,13 @@
 #define MOVIELISTMODEL_H
 
 #include <QAbstractListModel>
-#include "collectionmanager.h"
+#include "moviecollection.h"
 
 class MovieListModel : public QAbstractListModel
 {
 	Q_OBJECT
 public:
-	explicit MovieListModel(QObject *parent = 0);
+	explicit MovieListModel(const QString &fileName, QObject *parent = 0);
 
 	int rowCount(const QModelIndex &) const;
 	int columnCount(const QModelIndex &) const;
@@ -22,7 +22,7 @@ public slots:
 
 private:
 
-	CollectionManager m_movieCollection;
+	MovieCollection *m_movieCollection;
 	QStringList m_header;
 	
 };

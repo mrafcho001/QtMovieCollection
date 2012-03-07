@@ -13,17 +13,20 @@ TEMPLATE = app
 SOURCES += main.cpp\
 		mainwindow.cpp \
     movieinfo.cpp \
-    collectionmanager.cpp \
     movielistmodel.cpp \
     moviefilterproxymodel.cpp \
-    filtersearchwidget.cpp
+    filtersearchwidget.cpp \
+    moviecollection.cpp \
+    moviecollectionstreemodel.cpp
 
 HEADERS  += mainwindow.h \
     movieinfo.h \
-    collectionmanager.h \
     movielistmodel.h \
     moviefilterproxymodel.h \
-    filtersearchwidget.h
+    filtersearchwidget.h \
+    moviecollection.h \
+    moviecollectionstreemodel.h \
+    constants.h
 
 FORMS    += mainwindow.ui \
     filtersearchwidget.ui

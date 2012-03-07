@@ -1,16 +1,17 @@
 #include "movielistmodel.h"
 #include <QDebug>
 
-MovieListModel::MovieListModel(QObject *parent) :
+MovieListModel::MovieListModel(const QString &fileName, QObject *parent) :
 	QAbstractListModel(parent)
 {
 	m_header << "Name" << "Year" << "Rating";
+	m_movieCollection = new MovieCollection(QString("Library"), fileName);
 }
 
 
 int MovieListModel::rowCount(const QModelIndex &/*parent*/) const
 {
-	return m_movieCollection.count();
+	return m_movieCollection->count();
 }
 
 int MovieListModel::columnCount(const QModelIndex &/*parent*/) const
@@ -22,7 +23,7 @@ QVariant MovieListModel::data(const QModelIndex &index, int role) const
 {
 	if(role == Qt::DisplayRole && index.isValid())
 	{
-		MovieInfo mi = m_movieCollection.getMovieInfo(index.row());
+		MovieInfo mi = m_movieCollection->getMovieInfo(index.row());
 		switch(index.column())
 		{
 		case 0:

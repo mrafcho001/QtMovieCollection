@@ -6,14 +6,16 @@
 #include <QtCore>
 #include <QList>
 
-class CollectionManager
+class MovieCollection
 {
 public:
-	CollectionManager();
-	~CollectionManager();
+	MovieCollection(const QString &name, const QString &fileName);
+	~MovieCollection();
 
 	const MovieInfo& getMovieInfo(const int index) const;
 	MovieInfo& getMovieInfo(const int index);
+
+	void setDirty();
 
 	int count() const;
 
@@ -28,8 +30,9 @@ public:
 	void writeToFile();
 protected:
 
-	QString m_xmlFileLocation;
-	bool m_read;
+	bool m_dirty;
+	QString m_collectionName;
+	QString m_xmlFilePath;
 	QXmlStreamReader *m_xmlReader;
 	QXmlStreamWriter *m_xmlWriter;
 

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	sizes << 150 <<1000;
 	ui->splitter->setSizes(sizes);
 
-	MovieListModel *model = new MovieListModel(this);
+	MovieListModel *model = new MovieListModel(QString("Library.xml"), this);
 	MovieFilterProxyModel *filterModel = new MovieFilterProxyModel(this);
 	filterModel->setSourceModel(model);
 	filterModel->setDynamicSortFilter(true);
