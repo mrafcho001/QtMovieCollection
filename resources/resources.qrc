@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>movie-add.png</file>
+        <file>movie-delete.png</file>
+        <file>movie-collection-add.png</file>
+        <file>movie-collection-delete.png</file>
+    </qresource>
+</RCC>

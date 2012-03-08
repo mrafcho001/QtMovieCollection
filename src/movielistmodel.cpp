@@ -8,6 +8,12 @@ MovieListModel::MovieListModel(const QString &fileName, QObject *parent) :
 	m_movieCollection = new MovieCollection(QString("Library"), fileName);
 }
 
+MovieListModel::MovieListModel(const MovieCollection *mc, QObject *parent)
+{
+	m_header << "Name" << "Year" << "Rating";
+	m_movieCollection = new MovieCollection(*mc);
+}
+
 
 int MovieListModel::rowCount(const QModelIndex &/*parent*/) const
 {

@@ -16,6 +16,14 @@ MovieCollection::MovieCollection(const QString &name, const QString &fileName)
 	readFromFile();
 }
 
+MovieCollection::MovieCollection(const MovieCollection &mc)
+{
+	m_dirty = mc.m_dirty;
+	m_collectionName = mc.m_collectionName;
+	m_xmlFilePath = mc.m_xmlFilePath;
+	readFromFile();
+}
+
 MovieCollection::~MovieCollection()
 {
 	if(m_dirty)
@@ -35,6 +43,16 @@ MovieInfo& MovieCollection::getMovieInfo(const int index)
 int MovieCollection::count() const
 {
 	return m_movies.count();
+}
+
+QString MovieCollection::getName() const
+{
+	return m_collectionName;
+}
+
+void MovieCollection::setName(const QString name)
+{
+	m_collectionName = name;
 }
 
 void MovieCollection::addMovie(const MovieInfo &mi)

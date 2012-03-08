@@ -8,7 +8,8 @@ class MovieListModel : public QAbstractListModel
 {
 	Q_OBJECT
 public:
-	explicit MovieListModel(const QString &fileName, QObject *parent = 0);
+	MovieListModel(const QString &fileName, QObject *parent = 0);
+	MovieListModel(const MovieCollection *mc, QObject *parent = 0);
 
 	int rowCount(const QModelIndex &) const;
 	int columnCount(const QModelIndex &) const;

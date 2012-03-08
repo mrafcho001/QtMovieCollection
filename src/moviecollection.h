@@ -10,6 +10,7 @@ class MovieCollection
 {
 public:
 	MovieCollection(const QString &name, const QString &fileName);
+	MovieCollection(const MovieCollection &mc);
 	~MovieCollection();
 
 	const MovieInfo& getMovieInfo(const int index) const;
@@ -18,6 +19,9 @@ public:
 	void setDirty();
 
 	int count() const;
+
+	QString getName() const;
+	void setName(const QString name);
 
 	void addMovie(const MovieInfo &mi);
 	void removeMovie(const int index);

@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     moviefilterproxymodel.cpp \
     filtersearchwidget.cpp \
     moviecollection.cpp \
-    moviecollectionstreemodel.cpp
+    moviecollectionstreemodel.cpp \
+    addnewmoviedialog.cpp
 
 HEADERS  += mainwindow.h \
     movieinfo.h \
@@ -26,10 +27,12 @@ HEADERS  += mainwindow.h \
     filtersearchwidget.h \
     moviecollection.h \
     moviecollectionstreemodel.h \
-    constants.h
+    constants.h \
+    addnewmoviedialog.h
 
 FORMS    += mainwindow.ui \
-    filtersearchwidget.ui
+    filtersearchwidget.ui \
+    addnewmoviedialog.ui
 
 OBJECTS_DIR = ../build/.obj
 MOC_DIR = ../build/.moc
@@ -50,3 +53,6 @@ else {
 	CONFIG += release
 	CONFIG -= debug
 }
+
+RESOURCES += \
+    ../resources/resources.qrc

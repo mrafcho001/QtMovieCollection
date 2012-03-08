@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QModelIndex>
 #include "filtersearchwidget.h"
 
 namespace Ui {
@@ -19,6 +20,8 @@ public:
 public slots:
 	void toggleFilterBar();
 	void updateFilter(QString text, QRegExp::PatternSyntax ps, Qt::CaseSensitivity cs);
+
+	void collectionChanged(QModelIndex current, QModelIndex previous);
 	
 private:
 	Ui::MainWindow *ui;
