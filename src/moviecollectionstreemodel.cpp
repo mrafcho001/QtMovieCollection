@@ -9,8 +9,8 @@ MovieCollectionsTreeModel::MovieCollectionsTreeModel(QObject *parent) :
 	for(int i = 0; i < size; i++)
 	{
 		m_settings.setArrayIndex(i);
-		QString name = m_settings.value(QSETTINGS_MOVIE_COLLECTINOS_COLLECTION_NAME).toString();
-		QString filename = m_settings.value(QSETTINGS_MOVIE_COLLECTINOS_COLLECTIN_FILENAME).toString();
+		QString name = m_settings.value(QSETTINGS_MOVIE_COLLECTIONS_COLLECTION_NAME).toString();
+		QString filename = m_settings.value(QSETTINGS_MOVIE_COLLECTIONS_COLLECTION_FILENAME).toString();
 
 		m_collections.append(new MovieCollection(name, filename));
 	}
