@@ -18,7 +18,8 @@ SOURCES += src/main.cpp\
     src/filtersearchwidget.cpp \
     src/moviecollection.cpp \
     src/moviecollectionstreemodel.cpp \
-    src/addnewmoviedialog.cpp
+    src/addnewmoviedialog.cpp \
+    src/importlist.cpp
 
 HEADERS  += src/mainwindow.h \
     src/movieinfo.h \
@@ -28,11 +29,13 @@ HEADERS  += src/mainwindow.h \
     src/moviecollection.h \
     src/moviecollectionstreemodel.h \
     src/constants.h \
-    src/addnewmoviedialog.h
+    src/addnewmoviedialog.h \
+    src/importlist.h
 
 FORMS    += src/mainwindow.ui \
     src/filtersearchwidget.ui \
-    src/addnewmoviedialog.ui
+    src/addnewmoviedialog.ui \
+    src/importlist.ui
 
 OBJECTS_DIR = build/.obj
 MOC_DIR = build/.moc
