@@ -10,7 +10,7 @@ class MovieCollection
 {
 public:
 	MovieCollection(const QString &name, const QString &fileName);
-	MovieCollection(const MovieCollection &mc);
+    MovieCollection(const MovieCollection &mc);
 	~MovieCollection();
 
 	const MovieInfo& getMovieInfo(const int index) const;
@@ -24,7 +24,12 @@ public:
 	void setName(const QString name);
 
 	void addMovie(const MovieInfo &mi);
-	void removeMovie(const int index);
+    void removeMovie(const int index);
+
+    void insertMovie(int row, const MovieInfo &mi);
+    void insertNewMoview(int row);
+
+    void removeAt(int row);
 
 	void sync();
 

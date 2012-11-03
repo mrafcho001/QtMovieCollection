@@ -23,11 +23,13 @@ public:
 
 	bool removeRows(int row, int count, const QModelIndex &parent);
 
-	Qt::ItemFlags flags(const QModelIndex &index) const;
+    Qt::ItemFlags flags(const QModelIndex &index) const;
 	
 signals:
 	
 public slots:
+
+    void SaveCollectionChanges();
 
 private:
 

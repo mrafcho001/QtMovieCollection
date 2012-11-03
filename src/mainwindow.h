@@ -21,7 +21,11 @@ public slots:
 	void toggleFilterBar();
 	void updateFilter(QString text, QRegExp::PatternSyntax ps, Qt::CaseSensitivity cs);
 
-	void collectionChanged(QModelIndex current, QModelIndex previous);
+    void collectionChanged(QModelIndex current, QModelIndex previous);
+
+    void addMovie();
+
+    void SaveChanges();
 	
 private:
 	Ui::MainWindow *ui;

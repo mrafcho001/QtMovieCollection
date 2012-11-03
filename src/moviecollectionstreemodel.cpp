@@ -117,3 +117,9 @@ Qt::ItemFlags MovieCollectionsTreeModel::flags(const QModelIndex &index) const
 	return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 
 }
+
+void MovieCollectionsTreeModel::SaveCollectionChanges()
+{
+    foreach(MovieCollection *mc, m_collections)
+        mc->sync();
+}

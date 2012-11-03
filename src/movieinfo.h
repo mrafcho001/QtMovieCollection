@@ -28,9 +28,12 @@ public:
 	void addGenre(QString genre);
 
 	bool removeTag(QString tag);
-	bool removeTag(int index);
+    bool removeTag(int index);
+    void clearTags();
+
 	bool removeGenre(QString genre);
-	bool removeGenre(int index);
+    bool removeGenre(int index);
+    void clearGenres();
 
 private:
 	QString m_name;

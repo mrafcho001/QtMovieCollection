@@ -8,10 +8,10 @@ MovieListModel::MovieListModel(const QString &fileName, QObject *parent) :
 	m_movieCollection = new MovieCollection(QString("Library"), fileName);
 }
 
-MovieListModel::MovieListModel(const MovieCollection *mc, QObject *parent)
+MovieListModel::MovieListModel(MovieCollection *mc, QObject *parent)
 {
 	m_header << "Name" << "Year" << "Rating";
-	m_movieCollection = new MovieCollection(*mc);
+    m_movieCollection = mc;
 }
 
 
@@ -40,7 +40,7 @@ QVariant MovieListModel::data(const QModelIndex &index, int role) const
 			return mi.getRating();
 		}
 	}
-	return QVariant();
+    return QVariant();
 }
 
 QVariant MovieListModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -51,3 +51,52 @@ QVariant MovieListModel::headerData(int section, Qt::Orientation orientation, in
 	}
 	return QVariant();
 }
+
+bool MovieListModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    beginInsertRows(QModelIndex(), row, row+count-1);
+    MovieInfo mi;
+    for(int i = row; i < row+count-1; i++)
+        this->m_movieCollection->insertNewMoview(i);
+    endInsertRows();
+
+    return true;
+}
+
+bool MovieListModel::insertRow(int row, const QModelIndex &parent)
+{
+    beginInsertRows(QModelIndex(), row, row);
+    this->m_movieCollection->insertNewMoview(row);
+    endInsertRows();
+
+    return true;
+}
+
+bool MovieListModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    beginRemoveRows(QModelIndex(), row, row+count-1);
+    for(int i = row; i < row+count; i++)
+        this->m_movieCollection->removeAt(i);
+    endRemoveRows();
+
+    return true;
+}
+
+bool MovieListModel::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(QModelIndex(), row, row);
+    this->m_movieCollection->removeAt(row);
+    endRemoveRows();
+
+    return true;
+}
+
+bool MovieListModel::insertMovie(int row, const MovieInfo &mi, const QModelIndex &parent)
+{
+    beginInsertRows(QModelIndex(), row, row);
+    this->m_movieCollection->insertMovie(row, mi);
+    endInsertRows();
+
+    return true;
+}
+

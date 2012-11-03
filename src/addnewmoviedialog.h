@@ -2,6 +2,7 @@
 #define ADDNEWMOVIEDIALOG_H
 
 #include <QDialog>
+#include "movieinfo.h"
 
 namespace Ui {
 class AddNewMovieDialog;
@@ -13,10 +14,25 @@ class AddNewMovieDialog : public QDialog
 	
 public:
 	explicit AddNewMovieDialog(QWidget *parent = 0);
-	~AddNewMovieDialog();
+    ~AddNewMovieDialog();
+
+    void setMovieInfoPtr(MovieInfo *ptr);
+
+public slots:
+
+    void AcceptChanges();
+    void CancelChanges();
+
+    void AddNewGenre();
+    void AddNewtag();
+
+    void RemoveSelectedGenres();
+    void RemoveSelectedTags();
 	
 private:
-	Ui::AddNewMovieDialog *ui;
+    Ui::AddNewMovieDialog *ui;
+
+    MovieInfo *mi;
 };
 
 #endif // ADDNEWMOVIEDIALOG_H

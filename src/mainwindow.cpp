@@ -3,6 +3,7 @@
 #include "movielistmodel.h"
 #include "moviefilterproxymodel.h"
 #include "moviecollectionstreemodel.h"
+#include "addnewmoviedialog.h"
 
 #include <QStringListModel>
 
@@ -16,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->splitter->setStretchFactor(1,10);
 	QList<int> sizes;
 	sizes << 150 <<1000;
-	ui->splitter->setSizes(sizes);
+    ui->splitter->setSizes(sizes);
 
 	MovieCollectionsTreeModel *mc_model = new MovieCollectionsTreeModel(this);
 	ui->tvCollectionView->setModel(mc_model);
@@ -27,18 +28,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ui->tvCollectionView->selectionModel()->setCurrentIndex(ui->tvCollectionView->model()->index(0, 0), QItemSelectionModel::Select);
 
+    //Initialize Filter Action
 	filterBar = new FilterSearchWidget(this);
 	ui->verticalLayout->addWidget(filterBar);
 	filterBar->hide();
 	connect(filterBar, SIGNAL(filterChanged(QString,QRegExp::PatternSyntax,Qt::CaseSensitivity)),
 			this, SLOT(updateFilter(QString,QRegExp::PatternSyntax,Qt::CaseSensitivity)));
 
-	connect(ui->actionShowFIlter, SIGNAL(triggered()), this, SLOT(toggleFilterBar()));
-	ui->actionShowFIlter->setIcon(QIcon::fromTheme("view-filter"));
-	ui->actionDeleteMovieGroup->setIcon(QIcon(":/icons/movie-collection-delete.png"));
+    connect(ui->actionShowFilter, SIGNAL(triggered()), this, SLOT(toggleFilterBar()));
+    ui->actionShowFilter->setIcon(QIcon::fromTheme("view-filter"));
+
+    //Initialize Add Movie Button
+    connect(ui->actionAddNewMovie, SIGNAL(triggered()), this, SLOT(addMovie()));
+    ui->actionAddNewMovie->setIcon(QIcon(":/icons/movie-add"));
+
+    //Other Toolbar Buttons
+    ui->actionDeleteMovieGroup->setIcon(QIcon(":/icons/movie-collection-delete.png"));
 	ui->actionNewMovieGroup->setIcon(QIcon(":/icons/movie-collection-add"));
-	ui->actionAddNewMovie->setIcon(QIcon(":/icons/movie-add"));
-	ui->actionDeleteMovie->setIcon(QIcon(":/icons/movie-delete"));
+    ui->actionDeleteMovie->setIcon(QIcon(":/icons/movie-delete"));
+
+    //Other Actions
+
+
+    //Save Changes
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(SaveChanges()));
+
 }
 
 void MainWindow::toggleFilterBar()
@@ -70,6 +84,23 @@ void MainWindow::collectionChanged(QModelIndex current, QModelIndex previous)
 	filterModel->setDynamicSortFilter(true);
 
 	ui->tvMovieList->setModel(filterModel);
+}
+
+void MainWindow::addMovie()
+{
+    MovieListModel *model = (MovieListModel*)((MovieFilterProxyModel*)ui->tvMovieList->model())->sourceModel();
+    MovieInfo mi;
+
+    AddNewMovieDialog *newMovieDialog = new AddNewMovieDialog(this);
+    newMovieDialog->setMovieInfoPtr(&mi);
+    if(newMovieDialog->exec() == QDialog::Accepted)
+        model->insertMovie(0, mi, QModelIndex());
+}
+
+void MainWindow::SaveChanges()
+{
+    MovieCollectionsTreeModel *model = (MovieCollectionsTreeModel*)ui->tvCollectionView->model();
+    model->SaveCollectionChanges();
 }
 
 MainWindow::~MainWindow()

@@ -26,8 +26,6 @@ MovieCollection::MovieCollection(const MovieCollection &mc)
 
 MovieCollection::~MovieCollection()
 {
-	if(m_dirty)
-		writeToFile();
 }
 
 const MovieInfo& MovieCollection::getMovieInfo(const int index) const
@@ -52,17 +50,38 @@ QString MovieCollection::getName() const
 
 void MovieCollection::setName(const QString name)
 {
+    m_dirty = true;
 	m_collectionName = name;
 }
 
 void MovieCollection::addMovie(const MovieInfo &mi)
 {
-	m_movies.append(mi);
+    m_dirty = true;
+    m_movies.append(mi);
 }
 
 void MovieCollection::removeMovie(const int index)
 {
-	m_movies.removeAt(index);
+    m_dirty = true;
+    m_movies.removeAt(index);
+}
+void MovieCollection::insertMovie(int row, const MovieInfo &mi)
+{
+    m_dirty = true;
+    m_movies.insert(row, mi);
+}
+
+void MovieCollection::insertNewMoview(int row)
+{
+    m_dirty = true;
+    MovieInfo mi;
+    m_movies.insert(row, mi);
+}
+
+void MovieCollection::removeAt(int row)
+{
+    m_dirty = true;
+    m_movies.removeAt(row);
 }
 
 void MovieCollection::sync()
@@ -126,7 +145,9 @@ void MovieCollection::readFromFile()
 	}
 
 	delete m_xmlReader;
-	file.close();
+    file.close();
+
+    m_dirty = false;
 }
 
 void MovieCollection::writeToFile()
@@ -167,5 +188,6 @@ void MovieCollection::writeToFile()
 	delete m_xmlWriter;
 
 
-	file.close();
+    file.close();
+    m_dirty = false;
 }

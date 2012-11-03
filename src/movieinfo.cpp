@@ -1,6 +1,7 @@
 #include "movieinfo.h"
 
-MovieInfo::MovieInfo()
+MovieInfo::MovieInfo() :
+    m_name(""), m_year(1990), m_rating(0), m_lastWatched(QDate::currentDate())
 {
 }
 
@@ -91,7 +92,12 @@ bool MovieInfo::removeTag(int index)
 		return false;
 
 	m_tags.removeAt(index);
-	return true;
+    return true;
+}
+
+void MovieInfo::clearTags()
+{
+    m_tags.clear();
 }
 
 bool MovieInfo::removeGenre(QString genre)
@@ -111,5 +117,10 @@ bool MovieInfo::removeGenre(int index)
 		return false;
 
 	m_genres.removeAt(index);
-	return true;
+    return true;
+}
+
+void MovieInfo::clearGenres()
+{
+    m_genres.clear();
 }
