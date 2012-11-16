@@ -86,6 +86,7 @@
     </property>
     <addaction name="actionImport_XML"/>
     <addaction name="actionImport_From_Files"/>
+    <addaction name="actionImport_List"/>
     <addaction name="separator"/>
     <addaction name="actionReload"/>
     <addaction name="actionSave"/>
@@ -246,12 +247,17 @@
   </action>
   <action name="actionImport_From_Files">
    <property name="text">
-    <string>Import From Movie Files</string>
+    <string>Import From Directory</string>
    </property>
   </action>
   <action name="actionImport_XML">
    <property name="text">
     <string>Import XML</string>
+   </property>
+  </action>
+  <action name="actionImport_List">
+   <property name="text">
+    <string>Import List</string>
    </property>
   </action>
  </widget>

@@ -2,6 +2,7 @@
 #define IMPORTLIST_H
 
 #include <QDialog>
+#include <QFile>
 
 namespace Ui {
 class ImportList;
@@ -14,9 +15,17 @@ class ImportList : public QDialog
 public:
     explicit ImportList(QWidget *parent = 0);
     ~ImportList();
-    
+
+public slots:
+    void togglePreview();
+    void browseListFile();
+    void reloadSelectedFile();
+    void addSelectedColumns();
+
 private:
     Ui::ImportList *ui;
+
+    QFile *selectedFile;
 };
 
 #endif // IMPORTLIST_H

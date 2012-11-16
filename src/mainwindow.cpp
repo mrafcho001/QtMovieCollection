@@ -4,6 +4,7 @@
 #include "moviefilterproxymodel.h"
 #include "moviecollectionstreemodel.h"
 #include "addnewmoviedialog.h"
+#include "importlist.h"
 
 #include <QStringListModel>
 
@@ -53,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //Save Changes
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(SaveChanges()));
 
+    //Import from list
+    connect(ui->actionImport_List, SIGNAL(triggered()), this, SLOT(ImportFromList()));
+
 }
 
 void MainWindow::toggleFilterBar()
@@ -101,6 +105,12 @@ void MainWindow::SaveChanges()
 {
     MovieCollectionsTreeModel *model = (MovieCollectionsTreeModel*)ui->tvCollectionView->model();
     model->SaveCollectionChanges();
+}
+
+void MainWindow::ImportFromList()
+{
+    ImportList *il = new ImportList(this);
+    il->exec();
 }
 
 MainWindow::~MainWindow()

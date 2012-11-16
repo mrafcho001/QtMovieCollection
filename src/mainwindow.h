@@ -26,6 +26,7 @@ public slots:
     void addMovie();
 
     void SaveChanges();
+    void ImportFromList();
 	
 private:
 	Ui::MainWindow *ui;
