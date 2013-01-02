@@ -21,6 +21,9 @@ ImportList::ImportList(QWidget *parent) :
 
     //Column Management Related
     connect(ui->pbAdd, SIGNAL(clicked()), this, SLOT(addSelectedColumns()));
+    connect(ui->pbRemove, SIGNAL(clicked()), this, SLOT(removeSelectedColumns()));
+    connect(ui->pbMoveUp, SIGNAL(clicked()), this, SLOT(moveSelectedUp()));
+    connect(ui->pbMoveDown, SIGNAL(clicked()), this, SLOT(moveSelectedDown()));
 
     QListWidgetItem *item = new QListWidgetItem("Name", ui->lwAvailableColumns);
     item->setToolTip("Movie Title; Can contain any character");
@@ -77,12 +80,38 @@ void ImportList::reloadSelectedFile()
 
 void ImportList::addSelectedColumns()
 {
-    qDebug() << "Running handler";
     QList<QListWidgetItem *> items = ui->lwAvailableColumns->selectedItems();
 
     foreach(QListWidgetItem *item, items)
+        ui->lwColumnOrder->addItem(ui->lwAvailableColumns->takeItem(ui->lwAvailableColumns->row(item)));
+}
+
+void ImportList::removeSelectedColumns()
+{
+    QList<QListWidgetItem *> items = ui->lwColumnOrder->selectedItems();
+
+    foreach(QListWidgetItem *item, items)
+        ui->lwAvailableColumns->addItem(ui->lwColumnOrder->takeItem(ui->lwColumnOrder->row(item)));
+}
+
+void ImportList::moveSelectedDown()
+{
+    int row = ui->lwColumnOrder->currentRow();
+
+    if(row < ui->lwColumnOrder->count() - 1)
     {
-        ui->lwAvailableColumns->removeItemWidget(item);
-        ui->lwColumnOrder->addItem(item);
+        ui->lwColumnOrder->insertItem(row + 1, ui->lwColumnOrder->takeItem(row));
+        ui->lwColumnOrder->setCurrentRow(row+1);
+    }
+}
+
+void ImportList::moveSelectedUp()
+{
+    int row = ui->lwColumnOrder->currentRow();
+
+    if(row > 0)
+    {
+        ui->lwColumnOrder->insertItem(row - 1, ui->lwColumnOrder->takeItem(row));
+        ui->lwColumnOrder->setCurrentRow(row - 1);
     }
 }

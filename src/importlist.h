@@ -21,6 +21,9 @@ public slots:
     void browseListFile();
     void reloadSelectedFile();
     void addSelectedColumns();
+    void removeSelectedColumns();
+    void moveSelectedDown();
+    void moveSelectedUp();
 
 private:
     Ui::ImportList *ui;
