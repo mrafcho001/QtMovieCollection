@@ -95,13 +95,15 @@ void MainWindow::collectionChanged(QModelIndex current, QModelIndex previous)
 
 void MainWindow::addMovie()
 {
-    MovieListModel *model = (MovieListModel*)((MovieFilterProxyModel*)ui->tvMovieList->model())->sourceModel();
     MovieInfo mi;
-
     AddNewMovieDialog *newMovieDialog = new AddNewMovieDialog(this);
     newMovieDialog->setMovieInfoPtr(&mi);
+
     if(newMovieDialog->exec() == QDialog::Accepted)
+    {
+        MovieListModel *model = (MovieListModel*)((MovieFilterProxyModel*)ui->tvMovieList->model())->sourceModel();
         model->insertMovie(0, mi, QModelIndex());
+    }
 }
 
 void MainWindow::SaveChanges()
@@ -113,7 +115,14 @@ void MainWindow::SaveChanges()
 void MainWindow::ImportFromList()
 {
     ImportList *il = new ImportList(this);
-    il->exec();
+    if(il->exec() == QDialog::Accepted)
+    {
+        MovieListModel *model = (MovieListModel*)((MovieFilterProxyModel*)ui->tvMovieList->model())->sourceModel();
+
+        QList<MovieInfo>::iterator itr = il->importedMovies.begin();
+        for(; itr != il->importedMovies.end(); ++itr)
+            model->insertMovie(0, *itr, QModelIndex());
+    }
 }
 
 MainWindow::~MainWindow()

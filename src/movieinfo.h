@@ -16,13 +16,15 @@ public:
 	QStringList getTags();
 	QStringList getGenres();
 	QString getIMDBLink();
-	QDate getLastWatchedDate();
+    QDate getLastWatchedDate();
+    QString getQuality();
 
 	void setName(QString name);
 	void setYear(int year);
 	void setRating(int rating);
 	void setIMDBLink(QString imdbLink);
-	void setLastWatchedDate(QDate date);
+    void setLastWatchedDate(QDate date);
+    void setQuality(QString quality);
 
 	void addTag(QString tag);
 	void addGenre(QString genre);
@@ -42,7 +44,8 @@ private:
 	QStringList m_tags;
 	QStringList m_genres;
 	QString m_imdbLink;
-	QDate m_lastWatched;
+    QDate m_lastWatched;
+    QString quality;
 };
 
 #endif // MOVIEINFO_H

@@ -37,7 +37,12 @@ QString MovieInfo::getIMDBLink()
 
 QDate MovieInfo::getLastWatchedDate()
 {
-	return m_lastWatched;
+    return m_lastWatched;
+}
+
+QString MovieInfo::getQuality()
+{
+    return quality;
 }
 
 void MovieInfo::setName(QString name)
@@ -62,7 +67,12 @@ void MovieInfo::setIMDBLink(QString imdbLink)
 
 void MovieInfo::setLastWatchedDate(QDate date)
 {
-	m_lastWatched = date;
+    m_lastWatched = date;
+}
+
+void MovieInfo::setQuality(QString quality)
+{
+    this->quality = quality;
 }
 
 void MovieInfo::addTag(QString tag)

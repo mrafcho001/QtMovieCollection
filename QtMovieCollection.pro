@@ -59,3 +59,6 @@ else {
 
 RESOURCES += \
     resources/resources.qrc
+
+OTHER_FILES += \
+    resources/importlist.sample
