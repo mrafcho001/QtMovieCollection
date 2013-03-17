@@ -30,12 +30,17 @@ MovieCollection::~MovieCollection()
 
 const MovieInfo& MovieCollection::getMovieInfo(const int index) const
 {
-	return m_movies[index];
+    return *m_movies[index];
 }
 
 MovieInfo& MovieCollection::getMovieInfo(const int index)
 {
-	return m_movies[index];
+    return *m_movies[index];
+}
+
+MovieInfo *MovieCollection::getMovieInfoPtr(const int index)
+{
+    return m_movies[index];
 }
 
 int MovieCollection::count() const
@@ -57,7 +62,7 @@ void MovieCollection::setName(const QString name)
 void MovieCollection::addMovie(const MovieInfo &mi)
 {
     m_dirty = true;
-    m_movies.append(mi);
+    m_movies.append(new MovieInfo(mi));
 }
 
 void MovieCollection::removeMovie(const int index)
@@ -68,14 +73,13 @@ void MovieCollection::removeMovie(const int index)
 void MovieCollection::insertMovie(int row, const MovieInfo &mi)
 {
     m_dirty = true;
-    m_movies.insert(row, mi);
+    m_movies.insert(row, new MovieInfo(mi));
 }
 
 void MovieCollection::insertNewMoview(int row)
 {
     m_dirty = true;
-    MovieInfo mi;
-    m_movies.insert(row, mi);
+    m_movies.insert(row, new MovieInfo());
 }
 
 void MovieCollection::removeAt(int row)
@@ -108,40 +112,40 @@ void MovieCollection::readFromFile()
 
 	while(!m_xmlReader->atEnd())
 	{
-		MovieInfo mi;
+        MovieInfo *mi = new MovieInfo();
 		while(m_xmlReader->readNextStartElement())
 		{
 			if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_NAME)
 			{
-				mi.setName(m_xmlReader->readElementText());
+                mi->setName(m_xmlReader->readElementText());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_YEAR)
 			{
-				mi.setYear(m_xmlReader->readElementText().toInt());
+                mi->setYear(m_xmlReader->readElementText().toInt());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_RATING)
 			{
-				mi.setRating(m_xmlReader->readElementText().toInt());
+                mi->setRating(m_xmlReader->readElementText().toInt());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_TAG)
 			{
-				mi.addTag(m_xmlReader->readElementText());
+                mi->addTag(m_xmlReader->readElementText());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_GENRE)
 			{
-				mi.addGenre(m_xmlReader->readElementText());
+                mi->addGenre(m_xmlReader->readElementText());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_IMDB)
 			{
-				mi.setIMDBLink(m_xmlReader->readElementText());
+                mi->setIMDBLink(m_xmlReader->readElementText());
 			}
 			else if(m_xmlReader->name() == XML_MOVIE_COLLECTION_MOVIE_LASTWATCHED)
 			{
-				mi.setLastWatchedDate(QDate::fromString(m_xmlReader->readElementText()));
+                mi->setLastWatchedDate(QDate::fromString(m_xmlReader->readElementText()));
 			}
 		}
-		if(!mi.getName().isEmpty())
-			m_movies.append(mi);
+        if(!mi->getName().isEmpty())
+            m_movies.append(mi);
 	}
 
 	delete m_xmlReader;
@@ -162,24 +166,24 @@ void MovieCollection::writeToFile()
 	m_xmlWriter->writeStartDocument();
 	m_xmlWriter->writeStartElement(XML_MOVIE_COLLECTION_TOP_ELEMENT);
 
-	foreach(MovieInfo mi, m_movies)
+    foreach(MovieInfo *mi, m_movies)
 	{
 		m_xmlWriter->writeStartElement(XML_MOVIE_COLLECTION_MOVIE_ELEMENT);
-		m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_NAME, mi.getName());
-		m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_YEAR, QString::number(mi.getYear()));
-		m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_RATING, QString::number(mi.getRating()));
-		QStringList sl = mi.getTags();
+        m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_NAME, mi->getName());
+        m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_YEAR, QString::number(mi->getYear()));
+        m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_RATING, QString::number(mi->getRating()));
+        QStringList sl = mi->getTags();
 		foreach(QString tag, sl)
 		{
 			m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_TAG, tag);
 		}
-		sl = mi.getGenres();
+        sl = mi->getGenres();
 		foreach(QString genre, sl)
 		{
 			m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_GENRE, genre);
 		}
-		m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_IMDB, mi.getIMDBLink());
-		m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_LASTWATCHED, mi.getLastWatchedDate().toString());
+        m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_IMDB, mi->getIMDBLink());
+        m_xmlWriter->writeTextElement(XML_MOVIE_COLLECTION_MOVIE_LASTWATCHED, mi->getLastWatchedDate().toString());
 		m_xmlWriter->writeEndElement();
 	}
 

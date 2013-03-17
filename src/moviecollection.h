@@ -15,6 +15,7 @@ public:
 
 	const MovieInfo& getMovieInfo(const int index) const;
 	MovieInfo& getMovieInfo(const int index);
+    MovieInfo* getMovieInfoPtr(const int index);
 
 	void setDirty();
 
@@ -45,7 +46,7 @@ protected:
 	QXmlStreamReader *m_xmlReader;
 	QXmlStreamWriter *m_xmlWriter;
 
-	QList<MovieInfo> m_movies;
+    QList<MovieInfo*> m_movies;
 };
 
 #endif // COLLECTIONMANAGER_H

@@ -4,16 +4,15 @@
 MovieListModel::MovieListModel(const QString &fileName, QObject *parent) :
 	QAbstractListModel(parent)
 {
-	m_header << "Name" << "Year" << "Rating";
-	m_movieCollection = new MovieCollection(QString("Library"), fileName);
+    m_header << "Name" << "Year" << "Rating" << "Last Watched" << "Quality";
+    m_movieCollection = new MovieCollection(QString("Library"), fileName);
 }
 
 MovieListModel::MovieListModel(MovieCollection *mc, QObject *parent)
 {
-	m_header << "Name" << "Year" << "Rating";
+    m_header << "Name" << "Year" << "Rating" << "Last Watched" << "Quality";
     m_movieCollection = mc;
 }
-
 
 int MovieListModel::rowCount(const QModelIndex &/*parent*/) const
 {
@@ -37,7 +36,11 @@ QVariant MovieListModel::data(const QModelIndex &index, int role) const
 		case 1:
 			return mi.getYear();
 		case 2:
-			return mi.getRating();
+            return mi.getRating();
+        case 3:
+            return mi.getLastWatchedDate();
+        case 4:
+            return mi.getQuality();
 		}
 	}
     return QVariant();
@@ -98,5 +101,19 @@ bool MovieListModel::insertMovie(int row, const MovieInfo &mi, const QModelIndex
     endInsertRows();
 
     return true;
+}
+
+MovieInfo *MovieListModel::getMovieInfoPtr(const QModelIndex &index)
+{
+    if(index.isValid())
+    {
+        return m_movieCollection->getMovieInfoPtr(index.row());
+    }
+    return NULL;
+}
+
+void MovieListModel::movieUpdated(const QModelIndex &index)
+{
+    emit dataChanged(index, index);
 }
 

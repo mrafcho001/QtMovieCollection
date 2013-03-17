@@ -5,6 +5,13 @@ MovieInfo::MovieInfo() :
 {
 }
 
+MovieInfo::MovieInfo(const MovieInfo &mi):
+    m_name(mi.m_name), m_year(mi.m_year), m_rating(mi.m_rating), m_tags(mi.m_tags),
+    m_genres(mi.m_genres), m_imdbLink(mi.m_imdbLink), m_lastWatched(mi.m_lastWatched),
+    m_quality(mi.m_quality)
+{
+}
+
 QString MovieInfo::getName()
 {
 	return m_name;
@@ -42,7 +49,7 @@ QDate MovieInfo::getLastWatchedDate()
 
 QString MovieInfo::getQuality()
 {
-    return quality;
+    return m_quality;
 }
 
 void MovieInfo::setName(QString name)
@@ -72,7 +79,7 @@ void MovieInfo::setLastWatchedDate(QDate date)
 
 void MovieInfo::setQuality(QString quality)
 {
-    this->quality = quality;
+    this->m_quality = quality;
 }
 
 void MovieInfo::addTag(QString tag)

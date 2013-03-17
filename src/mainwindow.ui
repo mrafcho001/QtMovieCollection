@@ -63,6 +63,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::ActionsContextMenu</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -258,6 +261,14 @@
   <action name="actionImport_List">
    <property name="text">
     <string>Import List</string>
+   </property>
+  </action>
+  <action name="actionUpdateWatchedDate">
+   <property name="text">
+    <string>Update Last Watched Date</string>
+   </property>
+   <property name="toolTip">
+    <string>Updates the last watched date.</string>
    </property>
   </action>
  </widget>

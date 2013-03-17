@@ -8,7 +8,8 @@
 class MovieInfo
 {
 public:
-	MovieInfo();
+    MovieInfo();
+    MovieInfo(const MovieInfo &mi);
 
 	QString getName();
 	int getYear();
@@ -24,7 +25,7 @@ public:
 	void setRating(int rating);
 	void setIMDBLink(QString imdbLink);
     void setLastWatchedDate(QDate date);
-    void setQuality(QString quality);
+    void setQuality(QString m_quality);
 
 	void addTag(QString tag);
 	void addGenre(QString genre);
@@ -45,7 +46,7 @@ private:
 	QStringList m_genres;
 	QString m_imdbLink;
     QDate m_lastWatched;
-    QString quality;
+    QString m_quality;
 };
 
 #endif // MOVIEINFO_H

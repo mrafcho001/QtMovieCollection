@@ -61,4 +61,5 @@ RESOURCES += \
     resources/resources.qrc
 
 OTHER_FILES += \
-    resources/importlist.sample
+    resources/importlist.sample \
+    resources/movies.csv

@@ -24,9 +24,12 @@ public slots:
     void collectionChanged(QModelIndex current, QModelIndex previous);
 
     void addMovie();
+    void editMovie(const QModelIndex &index);
+    void updateLastWatchedDate();
 
     void SaveChanges();
     void ImportFromList();
+
 	
 private:
 	Ui::MainWindow *ui;

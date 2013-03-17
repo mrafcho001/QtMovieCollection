@@ -23,6 +23,9 @@ public:
     bool removeRow(int row, const QModelIndex &parent);
 
     bool insertMovie(int row, const MovieInfo &mi, const QModelIndex &parent);
+
+    MovieInfo* getMovieInfoPtr(const QModelIndex &index);
+    void movieUpdated(const QModelIndex &index);
 	
 signals:
 	

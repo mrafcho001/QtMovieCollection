@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sizes << 150 <<1000;
     ui->splitter->setSizes(sizes);
 
+    //Setup Movie Tree View
     MovieCollectionsTreeModel *mc_model = new MovieCollectionsTreeModel(this);
     ui->tvCollectionView->setModel(mc_model);
     ui->tvCollectionView->setHeaderHidden(true);
@@ -28,6 +29,25 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(collectionChanged(QModelIndex,QModelIndex)));
 
     ui->tvCollectionView->selectionModel()->setCurrentIndex(ui->tvCollectionView->model()->index(0, 0), QItemSelectionModel::Select);
+
+    //Item double clicks
+    connect(ui->tvMovieList, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(editMovie(const QModelIndex&)));
+
+    QHeaderView *hv = ui->tvMovieList->header();
+    hv->setSortIndicatorShown(true);
+    hv->setClickable(true);
+    hv->setStretchLastSection(false);
+    hv->setResizeMode(0, QHeaderView::Stretch);
+    for(int i = 1; i < hv->count(); i++)
+        hv->setResizeMode(i, QHeaderView::ResizeToContents);
+    ui->tvMovieList->setSortingEnabled(true);
+
+    //Right clicks
+    ui->tvMovieList->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->tvMovieList->addAction(ui->actionUpdateWatchedDate);
+    ui->tvMovieList->addAction(ui->actionDeleteMovie);
+    ui->tvMovieList->addAction(ui->actionAddNewMovie);
+
 
     //Initialize Filter Action
     filterBar = new FilterSearchWidget(this);
@@ -49,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionDeleteMovie->setIcon(QIcon(":/icons/movie-delete"));
 
     //Other Actions
+    connect(ui->actionUpdateWatchedDate, SIGNAL(triggered()), this, SLOT(updateLastWatchedDate()));
 
 
     //Quit Action
@@ -103,6 +124,31 @@ void MainWindow::addMovie()
     {
         MovieListModel *model = (MovieListModel*)((MovieFilterProxyModel*)ui->tvMovieList->model())->sourceModel();
         model->insertMovie(0, mi, QModelIndex());
+    }
+}
+
+void MainWindow::editMovie(const QModelIndex & index)
+{
+    MovieFilterProxyModel *filterModel = static_cast<MovieFilterProxyModel*>(ui->tvMovieList->model());
+    MovieListModel *model = static_cast<MovieListModel*>(filterModel->sourceModel());
+    MovieInfo *mi = model->getMovieInfoPtr(index);
+
+    AddNewMovieDialog *editMovie = new AddNewMovieDialog(this);
+    editMovie->setMovieInfoPtr(mi);
+
+    if(editMovie->exec() == QDialog::Accepted)
+        model->movieUpdated(index);
+}
+
+void MainWindow::updateLastWatchedDate()
+{
+    QModelIndexList selected = ui->tvMovieList->selectionModel()->selectedRows();
+    MovieFilterProxyModel* fm = static_cast<MovieFilterProxyModel*>(ui->tvMovieList->model());
+    MovieListModel *model = static_cast<MovieListModel*>(fm->sourceModel());
+
+    foreach(QModelIndex index, selected)
+    {
+        model->getMovieInfoPtr(fm->mapToSource(index))->setLastWatchedDate(QDate::currentDate());
     }
 }
 

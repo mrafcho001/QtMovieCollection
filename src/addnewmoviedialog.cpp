@@ -3,7 +3,7 @@
 
 AddNewMovieDialog::AddNewMovieDialog(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::AddNewMovieDialog)
+    ui(new Ui::AddNewMovieDialog)
 {
     ui->setupUi(this);
 
